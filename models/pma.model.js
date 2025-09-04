@@ -4,7 +4,7 @@ const memberAttendanceLogSchema = new mongoose.Schema({
   records: [
     {
       date: { type: Date, required: true },
-      slot: { type: String, required: true } // Morning, Evening
+      slot: { type: String, required: true }
     }
   ]
 });
