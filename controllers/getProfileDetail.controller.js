@@ -1,5 +1,5 @@
 // controllers/memberController.js
-import { User } from "../models/User.js";
+import { User } from "../models/user.model.js";
 
 /**
  * Get profile details for a user

@@ -1,5 +1,5 @@
 // controllers/attendanceController.js
-import { Attendance } from "../models/Attendance.js";
+import { Attendance } from "../models/attendance.model.js";
 
 /**
  * Get previous attendance data with filtering, sorting, pagination

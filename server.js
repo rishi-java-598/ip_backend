@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 import cors from 'cors';
 // import router from "./Routes/Router.js";
 import dotenv from 'dotenv';
-import { router } from "./Routes/Router.js";
 import path from 'path';
+import {router} from "./Routes/Router.js";
 import { connectDB } from "./config/db.config.js";
 
 const app = express();
@@ -35,6 +35,49 @@ app.use('/api',router);
 // POST method to create a transaction, update account balance, and update balance history
 console.log(process.env.PORT);
 console.log(process.env.DBURL);
+
+import bcrypt from "bcryptjs";
+import { User } from "./models/user.model.js"; // adjust path if needed
+
+dotenv.config();
+
+const seedUsers = async () => {
+  try {
+
+    const hashedPassword = await bcrypt.hash("123456", 10); // default password
+
+    const admin = {
+      name: "Admin User",
+      email: "admin@example.com",
+      password: hashedPassword,
+      phone: "9999999999",
+      role: "admin",
+      status: "registered",
+      createdAt: new Date()
+    };
+
+    const manager = {
+      name: "Manager User",
+      email: "manager@example.com",
+      password: hashedPassword,
+      phone: "8888888888",
+      role: "manager",
+      status: "registered",
+      createdAt: new Date()
+    };
+
+    await User.insertMany([admin, manager]);
+
+    console.log("✅ Admin & Manager created successfully.");
+    console.log("📧 Admin Email: admin@example.com | 🔑 Password: 123456");
+    console.log("📧 Manager Email: manager@example.com | 🔑 Password: 123456");
+
+    mongoose.disconnect();
+  } catch (error) {
+    console.error("❌ Error seeding users:", error);
+    mongoose.disconnect();
+  }
+};
 
 
 
@@ -69,6 +112,7 @@ connectDB()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
+      seedUsers();
     });
   })
   .catch(err => {

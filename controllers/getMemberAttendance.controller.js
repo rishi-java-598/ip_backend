@@ -1,5 +1,5 @@
 // controllers/memberController.js
-import { pma } from "../models/MemberAttendanceLog.js";
+import { pma } from "../models/pma.model.js";
 
 /**
  * Get attendance records for a member

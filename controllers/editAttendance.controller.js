@@ -1,6 +1,6 @@
 // controllers/adminController.js
-import { Attendance } from "../models/Attendance.js";
-import { pma } from "../models/MemberAttendanceLog.js";
+import { Attendance } from "../models/attendance.model.js";
+import { pma } from "../models/pma.model.js";
 
 /**
  * Edit attendance data for a specific date

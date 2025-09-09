@@ -1,7 +1,7 @@
 // controllers/managerController.js
-import { Attendance } from "../models/Attendance.js";
-import { pma } from "../models/MemberAttendanceLog.js";
-import { User } from "../models/User.js";
+import { Attendance } from "../models/attendance.model.js";
+import { pma } from "../models/pma.model.js";
+import { User } from "../models/user.model.js";
 
 /**
  * Mark daily attendance

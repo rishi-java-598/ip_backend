@@ -1,6 +1,6 @@
 // controllers/attendanceController.js
-import { Attendance } from "../models/Attendance.js";
-import { User } from "../models/User.js";
+import { Attendance } from "../models/attendance.model.js";
+import { User } from "../models/user.model.js";
 
 /**
  * Get attendance summary for a specific date
