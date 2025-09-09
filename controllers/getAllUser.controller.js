@@ -1,5 +1,6 @@
 // controllers/adminController.js
 import { User } from "../models/user.model.js";
+//checked
 
 /**
  * Get all users with filtering, searching, sorting, and pagination
@@ -51,11 +52,13 @@ export const getAllUsers = async (req, res) => {
     // Pagination
     const skip = (page - 1) * limit;
 
-    const users = await User.find(filters)
+    let users = await User.find(filters)
       .sort(sortOptions)
       .skip(skip)
       .limit(parseInt(limit))
       .select("-password"); // exclude password
+
+    // users = users.filter(user => user.status === "registered"); // Exclude admins from the list
 
     const total = await User.countDocuments(filters);
 

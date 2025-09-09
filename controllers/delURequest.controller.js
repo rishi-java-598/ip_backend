@@ -1,6 +1,7 @@
 // controllers/managerController.js
 import { DeleteUserRequest } from "../models/request.model.js";
 import { User } from "../models/user.model.js";
+//checked
 
 /**
  * Manager submits a delete request for a member

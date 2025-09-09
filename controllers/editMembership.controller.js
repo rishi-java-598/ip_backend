@@ -1,6 +1,6 @@
 // controllers/adminController.js or managerController.js
 import { User } from "../models/user.model.js";
-
+//checked
 /**
  * Edit membership details for a member
  * req.body: { memberId, membershipType, startDate, endDate, status }

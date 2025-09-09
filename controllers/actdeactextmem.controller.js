@@ -1,6 +1,6 @@
 // controllers/adminController.js or managerController.js
-import { User } from "../models/User.js";
-
+import { User } from "../models/user.model.js";
+//useless
 /**
  * Update membership: activate/deactivate, change type, extend validity
  * req.body:

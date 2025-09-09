@@ -2,6 +2,7 @@
 import { User } from "../models/user.model.js";
 import { generateToken } from "../utils/token.util.js";
 import bcrypt from "bcryptjs";
+//checked
 
 async function login(req, res) {
   const { email, password } = req.body;

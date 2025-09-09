@@ -1,7 +1,7 @@
 // controllers/attendanceController.js
 import { Attendance } from "../models/attendance.model.js";
 import { User } from "../models/user.model.js";
-
+// left
 /**
  * Get attendance summary for a specific date
  * req.query.date - date to fetch summary
@@ -28,7 +28,7 @@ export const getAttendanceSummaryByDate = async (req, res) => {
       const slot = member.slot; // 1-9
       if (!slotSummary[slot]) slotSummary[slot] = [];
       slotSummary[slot].push({
-        memberId: member.memberId._id,
+        memberId: member.memberId,
         name: member.memberName,
         membershipType: member.membershipType,
         uniqueIdCard: member.uniqueIdCard

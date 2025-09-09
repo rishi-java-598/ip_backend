@@ -1,13 +1,16 @@
 // controllers/memberController.js
 import { pma } from "../models/pma.model.js";
-
+import { User } from "../models/user.model.js";
+//checked
 /**
  * Get full attendance history for a member
  * Also returns weekly & monthly attendance counts
  */
 export const getAttendanceHistoryForMember = async (req, res) => {
   try {
-    const memberId = req.user._id; // from JWT middleware
+    const memberId = req.user.id; // from JWT middleware
+
+    
     const {
       startDate,
       endDate,

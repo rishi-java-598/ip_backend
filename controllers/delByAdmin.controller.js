@@ -1,18 +1,20 @@
 // controllers/adminController.js
-import { UserDeletionRequest } from "../models/UserDeletionRequest.js";
-import { User } from "../models/User.js";
-import { Attendance } from "../models/Attendance.js";
-import { pma } from "../models/MemberAttendanceLog.js";
-
+import { DeleteUserRequest } from "../models/request.model.js";
+import { User } from "../models/user.model.js";
+import { Attendance } from "../models/attendance.model.js";
+import { pma } from "../models/pma.model.js";
 /**
  * Approve a user deletion request
  * This will delete the user after approval
  */
+
+//checked
+
 export const approveUserDeletionRequest = async (req, res) => {
   try {
     const { requestId } = req.params;
 
-    const request = await UserDeletionRequest.findById(requestId);
+    const request = await DeleteUserRequest.findById(requestId);
     if (!request) {
       return res.status(404).json({ message: "Deletion request not found." });
     }
@@ -26,7 +28,7 @@ export const approveUserDeletionRequest = async (req, res) => {
     await request.save();
 
     // Delete user after approval
-    await deleteUserById(request.memberId);
+    await deleteUserById(request.targetUser);
 
     res.status(200).json({ message: "User deletion approved and completed." });
 
@@ -55,7 +57,7 @@ export const deleteUserById = async (userId) => {
   await pma.deleteOne({ memberId: userId });
 
   // Also remove pending deletion request if exists
-  await UserDeletionRequest.deleteMany({ memberId: userId });
+  await DeleteUserRequest.deleteMany({ memberId: userId });
 };
 
 /**
@@ -77,5 +79,18 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error while deleting user." });
+  }
+};
+
+
+export const getAllDeletionRequests = async (req, res) => {
+  try {
+    const requests = await DeleteUserRequest.find({ status: "pending" })
+     
+    res.status(200).json({ requests });
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while fetching deletion requests." });
   }
 };

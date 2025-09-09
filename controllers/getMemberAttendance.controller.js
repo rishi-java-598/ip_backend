@@ -1,6 +1,6 @@
 // controllers/memberController.js
 import { pma } from "../models/pma.model.js";
-
+//left
 /**
  * Get attendance records for a member
  * Query params:
@@ -13,7 +13,9 @@ import { pma } from "../models/pma.model.js";
  */
 export const getMemberAttendance = async (req, res) => {
   try {
-    const memberId = req.user._id; // from JWT middleware
+    const memberId = req.user.id; // from JWT middleware
+    console.log(req.user);
+    
     const {
       startDate,
       endDate,

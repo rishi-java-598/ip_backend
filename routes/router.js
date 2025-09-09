@@ -20,17 +20,21 @@ import { getPreviousAttendance } from "../controllers/getPrevAttendance.controll
 import { getProfileDetails } from "../controllers/getProfileDetail.controller.js";
 import { getAttendanceHistoryForMember } from "../controllers/getAttendanceHistoryForMember.controller.js";
 import { getMemberAttendance } from "../controllers/getMemberAttendance.controller.js";
+import { approveUserRegistration } from "../controllers/approveURR.controller.js";
+import { approveUserDeletionRequest, getAllDeletionRequests } from "../controllers/delByAdmin.controller.js";
+import { addUser } from "../controllers/addU.controller.js";
 
 // Router init
 const router = express.Router();
 
-/* =====================
-   AUTH ROUTES
+/* =====================C
+   AUTH ROUTES 
 ===================== */
 router.post("/auth/login", login);
 router.post("/auth/register", registerUser);
+router.post("/auth/add-user", verifyToken, authorizeRoles("admin", "manager"), addUser);
 
-/* =====================
+/* =====================C
    PROFILE ROUTES
 ===================== */
 // Get own profile
@@ -41,6 +45,10 @@ router.get(
   getProfileDetails
 );
 
+router.put("/approve/:userId", approveUserRegistration);
+
+
+
 // Get profile by ID (only admin & manager can view others)
 router.get(
   "/profile/:id",
@@ -48,8 +56,16 @@ router.get(
   authorizeRoles("admin", "manager"),
   getProfileDetails
 );
+// Get all users with filters/search/sort
+//=====================================C
+router.get(
+  "/users",
+  verifyToken,
+  authorizeRoles("admin","manager"),
+  getAllUsers
+);
 
-/* =====================
+/* =====================C
    MANAGER ROUTES
 ===================== */
 // Request to delete a member
@@ -60,6 +76,53 @@ router.post(
   requestDeleteMember
 );
 
+
+router.delete(
+  "/admin/delete-member-request/:requestId",
+  verifyToken,
+  authorizeRoles("admin"),
+  approveUserDeletionRequest
+)
+
+router.get(
+  "/delete-member-requests",
+  verifyToken,
+  authorizeRoles("manager","admin"),
+  getAllDeletionRequests
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Mark daily attendance
 router.post(
   "/manager/attendance/mark",
@@ -68,7 +131,7 @@ router.post(
   markDailyAttendance
 );
 
-/* =====================
+/* =====================C
    ADMIN ROUTES
 ===================== */
 // Edit attendance
@@ -87,13 +150,7 @@ router.put(
   editMembership
 );
 
-// Get all users with filters/search/sort
-router.get(
-  "/admin/users",
-  verifyToken,
-  authorizeRoles("admin"),
-  getAllUsers
-);
+
 
 /* =====================
    ATTENDANCE ROUTES

@@ -1,7 +1,7 @@
 // controllers/authController.js
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-
+//checked
 // New user registration
 export const registerUser = async (req, res) => {
   try {

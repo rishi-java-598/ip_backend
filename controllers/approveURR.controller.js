@@ -1,5 +1,6 @@
 // controllers/adminController.js (or managerController.js if manager can approve)
-import { User } from "../models/User.js";
+import { User } from "../models/user.model.js";
+//checked
 
 /**
  * Approve a pending user registration
@@ -7,7 +8,8 @@ import { User } from "../models/User.js";
  */
 export const approveUserRegistration = async (req, res) => {
   try {
-    const { userId } = req.body;
+    // const { userId } = req.body;
+    const { userId } = req.params;
 
     if (!userId) {
       return res.status(400).json({ message: "User ID is required." });

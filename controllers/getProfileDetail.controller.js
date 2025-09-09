@@ -1,5 +1,6 @@
 // controllers/memberController.js
 import { User } from "../models/user.model.js";
+//checked
 
 /**
  * Get profile details for a user
@@ -12,10 +13,12 @@ import { User } from "../models/user.model.js";
 export const getProfileDetails = async (req, res) => {
   try {
     const requestingUser = req.user; // from JWT middleware
-    const userId = req.params.id || requestingUser._id;
+    console.log("Requesting User:", requestingUser);
+    
+    const userId = req.params.id || requestingUser.id;
 
     // If logged-in user is member, they can only fetch their own profile
-    if (requestingUser.role === "member" && userId.toString() !== requestingUser._id.toString()) {
+    if (requestingUser.role === "member" && userId.toString() !== requestingUser.id.toString()) {
       return res.status(403).json({ message: "Access denied." });
     }
 
