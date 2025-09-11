@@ -1,6 +1,6 @@
 // controllers/memberController.js
 import { pma } from "../models/pma.model.js";
-//left
+//checked
 /**
  * Get attendance records for a member
  * Query params:
