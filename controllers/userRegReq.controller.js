@@ -5,10 +5,10 @@ import bcrypt from "bcryptjs";
 // New user registration
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, phone, role, membership } = req.body;
+    const { name, email, password, phone } = req.body;
 
     // Validate required fields
-    if (!name || !email || !password || !phone || !role) {
+    if (!name || !email || !password || !phone ) {
       return res.status(400).json({ message: "All required fields must be filled." });
     }
 
@@ -26,10 +26,12 @@ export const registerUser = async (req, res) => {
     const newUser = new User({
       name,
       email,
+      uniqueIdCard: null, // To be generated upon approval
       password: hashedPassword,
       phone,
-      role,
-      membership: role === "member" ? membership : null, // Only members have membership
+      role: "member", // Default role is member
+      // membership: role === "member" ? membership : null, // Only members have membership
+       membership : null, // Only members have membership
       status: "pending",
       createdAt: new Date()
     });

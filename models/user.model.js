@@ -15,6 +15,9 @@ const userSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid 10-digit phone number!`
     }
   },
+  Gender:{ type: String, required: true ,
+    enum: ["Male","Female"]
+  },
 
   role: { 
     type: String, 

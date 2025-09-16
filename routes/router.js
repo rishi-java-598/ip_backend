@@ -23,6 +23,7 @@ import { getMemberAttendance } from "../controllers/getMemberAttendance.controll
 import { approveUserRegistration } from "../controllers/approveURR.controller.js";
 import { approveUserDeletionRequest, getAllDeletionRequests } from "../controllers/delByAdmin.controller.js";
 import { addUser } from "../controllers/addU.controller.js";
+import { updateUser } from "../controllers/updateUser.controller.js";
 
 // Router init
 const router = express.Router();
@@ -33,7 +34,7 @@ const router = express.Router();
 router.post("/auth/login", login);
 router.post("/auth/register", registerUser);
 router.post("/auth/add-user", verifyToken, authorizeRoles("admin", "manager"), addUser);
-
+router.put("/auth/update-user/:userId", verifyToken, authorizeRoles("admin", "manager"), updateUser);
 /* =====================C
    PROFILE ROUTES
 ===================== */
