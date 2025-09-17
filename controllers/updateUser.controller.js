@@ -6,6 +6,11 @@ export const updateUser = async (req, res) => {
     const { id } = req.params; // user ID from URL
     const updates = req.body;
 
+    console.log("Update data received:", updates);
+    console.log("User ID to update:", id);
+    
+    
+
     // Whitelist allowed fields for security
     const allowedFields = [
       "name",
@@ -32,6 +37,8 @@ export const updateUser = async (req, res) => {
     );
 
     if (!updatedUser) {
+      console.log("User not found with ID:", id);
+      
       return res.status(404).json({ message: "User not found" });
     }
 

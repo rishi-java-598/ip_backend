@@ -20,7 +20,7 @@ import { getPreviousAttendance } from "../controllers/getPrevAttendance.controll
 import { getProfileDetails } from "../controllers/getProfileDetail.controller.js";
 import { getAttendanceHistoryForMember } from "../controllers/getAttendanceHistoryForMember.controller.js";
 import { getMemberAttendance } from "../controllers/getMemberAttendance.controller.js";
-import { approveUserRegistration } from "../controllers/approveURR.controller.js";
+import { approveUserRegistration, rejectUserRegistration } from "../controllers/approveURR.controller.js";
 import { approveUserDeletionRequest, getAllDeletionRequests } from "../controllers/delByAdmin.controller.js";
 import { addUser } from "../controllers/addU.controller.js";
 import { updateUser } from "../controllers/updateUser.controller.js";
@@ -34,7 +34,7 @@ const router = express.Router();
 router.post("/auth/login", login);
 router.post("/auth/register", registerUser);
 router.post("/auth/add-user", verifyToken, authorizeRoles("admin", "manager"), addUser);
-router.put("/auth/update-user/:userId", verifyToken, authorizeRoles("admin", "manager"), updateUser);
+router.put("/auth/update-user/:id", verifyToken, authorizeRoles("admin", "manager"), updateUser);
 /* =====================C
    PROFILE ROUTES
 ===================== */
@@ -47,6 +47,7 @@ router.get(
 );
 
 router.put("/approve/:userId", approveUserRegistration);
+router.delete("/reject/:userId", rejectUserRegistration);
 
 
 
