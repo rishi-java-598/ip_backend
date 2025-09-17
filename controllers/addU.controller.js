@@ -9,10 +9,12 @@ import bcrypt from "bcryptjs";
  */
 export const addUser = async (req, res) => {
   try {
-    const { name, email, password, phone, role, membership } = req.body;
+    const { name, email, password, phone, role,Gender, membership,uniqueIdCard } = req.body;
 
     // Validate required fields
-    if (!name || !email || !password || !phone || !role) {
+    if (!name || !email || !password || !phone || !role||!Gender||!uniqueIdCard) {
+      console.log(req.body);
+      
       return res.status(400).json({ message: "All required fields must be provided." });
     }
 
@@ -28,11 +30,13 @@ export const addUser = async (req, res) => {
     // Create new user
     const newUser = new User({
       name,
+      uniqueIdCard,
+      Gender,
       email,
       password: hashedPassword,
       phone,
       role,
-      membership: role === "member" ? membership : null,
+      membership: membership ? membership : null,
       status: "registered", // Directly registered
       createdAt: new Date()
     });
