@@ -10,7 +10,7 @@ import { login } from "../controllers/login.controller.js";
 import { registerUser } from "../controllers/userRegReq.controller.js";
 
 import { requestDeleteMember } from "../controllers/delURequest.controller.js";
-import { markDailyAttendance } from "../controllers/markAttendance.controller.js";
+import { deleteMemberFromTodayAttendance, getTodayAttendance, markDailyAttendance, updateMemberSlot } from "../controllers/markAttendance.controller.js";
 import { editAttendance } from "../controllers/editAttendance.controller.js";
 import { editMembership } from "../controllers/editMembership.controller.js";
 import { getAllUsers } from "../controllers/getAllUser.controller.js";
@@ -187,6 +187,64 @@ router.get(
   verifyToken,
   authorizeRoles("member"),
   getAttendanceHistoryForMember
+);
+
+
+
+
+
+
+
+
+
+
+//added
+/**
+ * @route POST /manager/attendance/mark
+ * @desc Mark attendance for one or more members
+ * @access Manager/Admin
+ */
+router.post(
+  "/manager/attendance/mark",
+  verifyToken,
+  authorizeRoles("admin", "manager"),
+  markDailyAttendance
+);
+
+/**
+ * @route GET /attendance/today?date=YYYY-MM-DD
+ * @desc Get attendance for a specific date
+ * @access Manager/Admin
+ */
+router.get(
+  "/attendance/today",
+  verifyToken,
+  authorizeRoles("admin", "manager"),
+  getTodayAttendance
+);
+
+/**
+ * @route POST /attendance/today/delete
+ * @desc Remove a member from today’s attendance
+ * @access Manager/Admin
+ */
+router.post(
+  "/attendance/today/delete",
+  verifyToken,
+  authorizeRoles("admin", "manager"),
+  deleteMemberFromTodayAttendance
+);
+
+/**
+ * @route POST /attendance/today/update-slot
+ * @desc Update a member’s slot for today
+ * @access Manager/Admin
+ */
+router.post(
+  "/attendance/today/update-slot",
+  verifyToken,
+  authorizeRoles("admin", "manager"),
+  updateMemberSlot
 );
 
 export { router };
