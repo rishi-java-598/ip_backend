@@ -178,9 +178,37 @@ import { User } from "../models/user.model.js";
 // };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// main
 export const markDailyAttendance = async (req, res) => {
   try {
     const { date, members } = req.body;
+    console.log(date);
+    
     const markedBy = req.user.id; // Manager/Admin ID
 
     if (!date || !members || !Array.isArray(members)) {
@@ -188,8 +216,13 @@ export const markDailyAttendance = async (req, res) => {
     }
 
     // normalize date to one day (00:00:00 → 23:59:59)
-    const start = new Date(date); start.setHours(0, 0, 0, 0);
-    const end = new Date(date); end.setHours(23, 59, 59, 999);
+    // const start = new Date(date); start.setHours(0, 0, 0, 0);
+    // const end = new Date(date); end.setHours(23, 59, 59, 999);
+
+// normalize to local date boundaries
+const start = new Date(date + "T00:00:00"); 
+const end   = new Date(date + "T23:59:59.999");
+
 
     // fetch or create today's attendance
     let attendance = await Attendance.findOne({ date: { $gte: start, $lte: end } });
@@ -270,8 +303,11 @@ export const getTodayAttendance = async (req, res) => {
     const { date } = req.query;
     if (!date) return res.status(400).json({ message: "Date is required" });
 
-    const start = new Date(date); start.setHours(0,0,0,0);
-    const end = new Date(date); end.setHours(23,59,59,999);
+    // const start = new Date(date); start.setHours(0,0,0,0);
+    // const end = new Date(date); end.setHours(23,59,59,999);
+// normalize to local date boundaries
+const start = new Date(date + "T00:00:00"); 
+const end   = new Date(date + "T23:59:59.999");
 
     const attendance = await Attendance.findOne({ date: { $gte: start, $lte: end } });
 
@@ -296,8 +332,11 @@ export const deleteMemberFromTodayAttendance = async (req, res) => {
     const { date, memberId } = req.body;
     if (!date || !memberId) return res.status(400).json({ message: "Date and memberId are required" });
 
-    const start = new Date(date); start.setHours(0,0,0,0);
-    const end = new Date(date); end.setHours(23,59,59,999);
+    // const start = new Date(date); start.setHours(0,0,0,0);
+    // const end = new Date(date); end.setHours(23,59,59,999);
+// normalize to local date boundaries
+const start = new Date(date + "T00:00:00"); 
+const end   = new Date(date + "T23:59:59.999");
 
     const attendance = await Attendance.findOne({ date: { $gte: start, $lte: end } });
     if (!attendance) return res.status(404).json({ message: "No attendance for today" });
@@ -335,8 +374,12 @@ export const updateMemberSlot = async (req, res) => {
       return res.status(400).json({ message: "Invalid slot number" });
     }
 
-    const start = new Date(date); start.setHours(0,0,0,0);
-    const end = new Date(date); end.setHours(23,59,59,999);
+    // const start = new Date(date); start.setHours(0,0,0,0);
+    // const end = new Date(date); end.setHours(23,59,59,999);
+    // normalize to local date boundaries
+const start = new Date(date + "T00:00:00"); 
+const end   = new Date(date + "T23:59:59.999");
+
 
     const attendance = await Attendance.findOne({ date: { $gte: start, $lte: end } });
     if (!attendance) return res.status(404).json({ message: "No attendance for today" });

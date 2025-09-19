@@ -160,6 +160,16 @@ export const getPreviousAttendance = async (req, res) => {
     // If still null, it means no matching User exists for that ID
     const total = await Attendance.countDocuments(filters);
 
+
+    console.log({
+      page: parseInt(page),
+      limit: parseInt(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+      data: attendanceData
+    });
+    
+
     res.status(200).json({
       page: parseInt(page),
       limit: parseInt(limit),
