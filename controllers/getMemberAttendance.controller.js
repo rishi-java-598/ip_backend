@@ -13,8 +13,8 @@ import { pma } from "../models/pma.model.js";
  */
 export const getMemberAttendance = async (req, res) => {
   try {
-    const memberId = req.user.id; // from JWT middleware
-    console.log(req.user);
+    const memberId = req.params.userId; // from JWT middleware
+    // console.log(req.user);
     
     const {
       startDate,

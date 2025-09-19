@@ -5,7 +5,7 @@ import cors from 'cors';
 // import router from "./Routes/Router.js";
 import dotenv from 'dotenv';
 import path from 'path';
-import {router} from "./Routes/Router.js";
+import {router} from "./Routes/router.js";
 import { connectDB } from "./config/db.config.js";
 
 const app = express();
@@ -98,7 +98,9 @@ const healthCheck2 = (req, res) => {
   res.status(200).send('Server is up and running!');
 };
 
-app.get('/health',healthCheck);
+app.get('/health',(req,res)=>{
+  
+  healthCheck()});
 app.get('/health2',healthCheck2);
 
 

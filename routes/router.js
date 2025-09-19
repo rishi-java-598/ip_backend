@@ -175,9 +175,9 @@ router.get(
 
 // Get member’s own attendance
 router.get(
-  "/attendance/member",
+  "/attendance/member/:userId/",
   verifyToken,
-  authorizeRoles("member"),
+  // authorizeRoles("member"),
   getMemberAttendance
 );
 
