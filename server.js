@@ -5,7 +5,7 @@ import cors from 'cors';
 // import router from "./Routes/Router.js";
 import dotenv from 'dotenv';
 import path from 'path';
-import {router} from "./Routes/router.js";
+import { router } from "./Routes/router.js";
 import { connectDB } from "./config/db.config.js";
 
 const app = express();
