@@ -71,3 +71,62 @@ export const requestDeleteMember = async (req, res) => {
 //     res.status(500).json({ message: "Server error while deleting user." });
 //   }
 // };
+
+// controllers/deleteUserRequest.controller.js
+
+export const getDeleteUserRequests = async (req, res) => {
+
+  console.log("Fetching delete user requests with query:", req.query);
+  
+  try {
+    let {
+      page = 1,
+      limit = 10,
+      search = "",
+      status = "",
+      sortBy = "createdAt",
+      sortOrder = "desc",
+    } = req.query;
+
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const query = {};
+
+    // 🔍 Searching (check user ID or action or populate user name/email later)
+    if (search) {
+      query.$or = [
+        { action: { $regex: search, $options: "i" } },
+        { status: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // ✅ Filter by status
+    if (status && ["pending", "approved", "rejected"].includes(status)) {
+      query.status = status;
+    }
+
+    // 🔽 Sorting
+    const sort = {};
+    sort[sortBy] = sortOrder === "asc" ? 1 : -1;
+
+    // ✅ Fetch with pagination
+    const requests = await DeleteUserRequest.find(query)
+      .populate("targetUser", "name email phone role") // populate fields from User
+      .sort(sort)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const total = await DeleteUserRequest.countDocuments(query);
+
+    res.json({
+      data: requests,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      totalRecords: total,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

@@ -6,9 +6,11 @@ import bcrypt from "bcryptjs";
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, phone,Gender } = req.body;
+    console.log(req.body);
+    
 
     // Validate required fields
-    if (!name || !email || !password || !phone ||Gender) {
+    if (!name || !email || !password || !phone ||!Gender) {
       return res.status(400).json({ message: "All required fields must be filled." });
     }
 

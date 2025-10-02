@@ -9,7 +9,7 @@ import { authorizeRoles } from "../middlewares/authroles.middleware.js";
 import { login } from "../controllers/login.controller.js";
 import { registerUser } from "../controllers/userRegReq.controller.js";
 
-import { requestDeleteMember } from "../controllers/delURequest.controller.js";
+import { getDeleteUserRequests, requestDeleteMember } from "../controllers/delURequest.controller.js";
 import { deleteMemberFromTodayAttendance, getTodayAttendance, markDailyAttendance, updateMemberSlot } from "../controllers/markAttendance.controller.js";
 import { editAttendance } from "../controllers/editAttendance.controller.js";
 import { editMembership } from "../controllers/editMembership.controller.js";
@@ -77,6 +77,8 @@ router.post(
   authorizeRoles("manager"),
   requestDeleteMember
 );
+
+router.get("/manager/get-member-delete-requests", verifyToken, authorizeRoles("manager"), getDeleteUserRequests);
 
 
 router.delete(
