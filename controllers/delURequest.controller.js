@@ -35,7 +35,10 @@ export const requestDeleteMember = async (req, res) => {
     const deleteRequest = await DeleteUserRequest.create({
       targetUser: userId,
       action: "deleteUser", // Only one action in this schema
-      status: "pending"
+      status: "pending",
+      //added fields
+      name:member.name,
+      email:member.email,
     });
 
     res.status(201).json({
