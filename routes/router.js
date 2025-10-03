@@ -21,7 +21,7 @@ import { getProfileDetails } from "../controllers/getProfileDetail.controller.js
 import { getAttendanceHistoryForMember } from "../controllers/getAttendanceHistoryForMember.controller.js";
 import { getMemberAttendance } from "../controllers/getMemberAttendance.controller.js";
 import { approveUserRegistration, rejectUserRegistration } from "../controllers/approveURR.controller.js";
-import { approveUserDeletionRequest, getAllDeletionRequests } from "../controllers/delByAdmin.controller.js";
+import { approveUserDeletionRequest, getAllDeletionRequests, rejectUserDeletionRequest } from "../controllers/delByAdmin.controller.js";
 import { addUser } from "../controllers/addU.controller.js";
 import { updateUser } from "../controllers/updateUser.controller.js";
 
@@ -87,6 +87,12 @@ router.delete(
   authorizeRoles("admin"),
   approveUserDeletionRequest
 )
+router.put(
+  "/admin/reject-member-request/:requestId",
+  verifyToken,
+  authorizeRoles("admin"),
+  rejectUserDeletionRequest
+);
 
 router.get(
   "/delete-member-requests",

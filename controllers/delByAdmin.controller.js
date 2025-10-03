@@ -94,3 +94,27 @@ export const getAllDeletionRequests = async (req, res) => {
     res.status(500).json({ message: "Server error while fetching deletion requests." });
   }
 };
+
+
+export const rejectUserDeletionRequest = async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const request = await DeleteUserRequest.findById(requestId);
+    if (!request) {
+      return res.status(404).json({ message: "Deletion request not found." });
+    }
+    if (request.status !== "pending") {
+      return res.status(400).json({ message: "Request is not pending." });
+    }
+
+    // Reject request
+    request.status = "rejected";
+    await request.save();
+
+    res.status(200).json({ message: "User deletion request rejected." });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while rejecting deletion request." });
+  }
+};
