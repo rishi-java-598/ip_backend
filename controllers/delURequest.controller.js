@@ -101,6 +101,8 @@ export const getDeleteUserRequests = async (req, res) => {
       query.$or = [
         { action: { $regex: search, $options: "i" } },
         { status: { $regex: search, $options: "i" } },
+        { name: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
       ];
     }
 
