@@ -26,7 +26,7 @@ export const requestDeleteMember = async (req, res) => {
       targetUser: userId,
       status: "pending"
     });
-
+            
     if (existingRequest) {
       return res.status(400).json({ message: "A delete request for this member is already pending." });
     }
