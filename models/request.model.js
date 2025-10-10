@@ -6,7 +6,7 @@ const deleteUserRequestSchema = new mongoose.Schema({
   status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
   createdAt: { type: Date, default: Date.now },
     name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
 });
 
 export const DeleteUserRequest = mongoose.model("DeleteUserRequest", deleteUserRequestSchema);
