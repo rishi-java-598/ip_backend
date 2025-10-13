@@ -78,7 +78,7 @@ router.post(
   requestDeleteMember
 );
 
-router.get("/manager/get-member-delete-requests", verifyToken, authorizeRoles("manager"), getDeleteUserRequests);
+router.get("/manager/get-member-delete-requests", verifyToken, authorizeRoles("manager","admin"), getDeleteUserRequests);
 
 
 router.delete(

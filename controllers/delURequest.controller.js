@@ -117,11 +117,13 @@ export const getDeleteUserRequests = async (req, res) => {
 
     // ✅ Fetch with pagination
     const requests = await DeleteUserRequest.find(query)
-      .populate("targetUser", "name email phone role") // populate fields from User
+      // .populate("targetUser", "name email phone role") 
       .sort(sort)
       .skip((page - 1) * limit)
       .limit(limit);
 
+      console.log(requests);
+      
     const total = await DeleteUserRequest.countDocuments(query);
 
     res.json({

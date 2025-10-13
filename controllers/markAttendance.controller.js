@@ -265,6 +265,7 @@ const end   = new Date(date + "T23:59:59.999");
       attendance.presentMembers.push({
         memberId: member.memberId,
         memberName: member.memberName,
+        // memberEmail: member.memberEmail || null,
         membershipType: member.membershipType,
         uniqueIdCard: member.uniqueIdCard,
         slot: member.slot

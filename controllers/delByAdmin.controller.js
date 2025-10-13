@@ -9,6 +9,7 @@ import { pma } from "../models/pma.model.js";
  */
 
 //checked
+// need to be edited to remove all related data in the db
 
 export const approveUserDeletionRequest = async (req, res) => {
   try {
