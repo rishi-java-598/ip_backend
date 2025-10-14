@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 const memberAttendanceLogSchema = new mongoose.Schema({
   memberId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true },
+  memberEmail: { type: String, required: true }, // added for email change
+  memberName: { type: String, required: true }, // added for name change
   records: [
     {
       date: { type: Date, required: true },

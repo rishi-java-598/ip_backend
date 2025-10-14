@@ -208,6 +208,7 @@ export const markDailyAttendance = async (req, res) => {
   try {
     const { date, members } = req.body;
     console.log(date);
+    console.log(members);
     
     const markedBy = req.user.id; // Manager/Admin ID
 
@@ -260,12 +261,12 @@ const end   = new Date(date + "T23:59:59.999");
         errors.push(`Slot ${member.slot} is full for user ${member.memberName}.`);
         continue;
       }
-
+      
       // add member to today's attendance
       attendance.presentMembers.push({
         memberId: member.memberId,
         memberName: member.memberName,
-        // memberEmail: member.memberEmail || null,
+        memberEmail: member.memberEmail || null,
         membershipType: member.membershipType,
         uniqueIdCard: member.uniqueIdCard,
         slot: member.slot
@@ -276,7 +277,10 @@ const end   = new Date(date + "T23:59:59.999");
       updates.push(
         (async () => {
           let log = await pma.findOne({ memberId: member.memberId });
-          if (!log) log = new pma({ memberId: member.memberId, records: [] });
+          if (!log) log = new pma({ memberId: member.memberId, 
+            // added for email change
+            memberEmail: member.memberEmail
+            , records: [] });
           log.records.push({ date: start, slot: `Slot ${member.slot}` });
           return log.save();
         })()

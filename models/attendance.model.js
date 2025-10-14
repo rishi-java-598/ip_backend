@@ -9,6 +9,8 @@ const attendanceSchema = new mongoose.Schema({
       memberId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
       memberName: String,
       membershipType: String,
+      // added for email change
+      memberEmail : String,
       uniqueIdCard: String,
       slot: { type: Number, required: true } // Morning, Evening, Full Day, etc.
     }
