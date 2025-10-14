@@ -274,12 +274,15 @@ const end   = new Date(date + "T23:59:59.999");
       attendance.slotCounts[slotIndex]++;
 
       // update personal log
+      // console.log(member.memberEmail);
+      
       updates.push(
         (async () => {
           let log = await pma.findOne({ memberId: member.memberId });
           if (!log) log = new pma({ memberId: member.memberId, 
             // added for email change
-            memberEmail: member.memberEmail
+            memberEmail: member.memberEmail,
+            memberName: member.memberName
             , records: [] });
           log.records.push({ date: start, slot: `Slot ${member.slot}` });
           return log.save();
@@ -368,6 +371,8 @@ const end   = new Date(date + "T23:59:59.999");
     res.status(500).json({ message: "Error deleting member from attendance" });
   }
 };
+
+
 export const updateMemberSlot = async (req, res) => {
   try {
     const { date, memberId, newSlot } = req.body;

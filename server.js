@@ -8,6 +8,10 @@ import path from 'path';
 import { router } from "./Routes/router.js";
 import { connectDB } from "./config/db.config.js";
 
+
+import { pma } from './models/pma.model.js';
+// import { User } from './models/User.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 dotenv.config();
@@ -41,6 +45,8 @@ import { User } from "./models/user.model.js"; // adjust path if needed
 
 dotenv.config();
 
+
+// 0one go functions
 const seedUsers = async () => {
   try {
 
@@ -79,6 +85,36 @@ const seedUsers = async () => {
   }
 };
 
+export async function fixMissingMemberDetails() {
+  try {
+    // No mongoose.connect() here, connection already established.
+
+    console.log('Starting update for missing memberName and memberEmail...');
+
+    const logsToFix = await pma.find({
+      $or: [{ memberName: { $exists: false } }, { memberEmail: { $exists: false } }],
+    });
+
+    console.log(`Found ${logsToFix.length} logs to update.`);
+
+    for (const log of logsToFix) {
+      const user = await User.findById(log.memberId);
+      if (user) {
+        log.memberName = user.name;
+        log.memberEmail = user.email;
+        await log.save();
+        console.log(`Updated log for memberId: ${log.memberId}`);
+      } else {
+        console.warn(`User not found for memberId: ${log.memberId}`);
+      }
+    }
+
+    console.log('All missing fields updated!');
+  } catch (error) {
+    console.error('Error updating MemberAttendanceLog:', error);
+  }
+}
+
 
 
 // mongoose.connect(process.env.DBURL)
@@ -112,7 +148,9 @@ app.get('/health2',healthCheck2);
 
 connectDB()
   .then(() => {
-    app.listen(PORT, () => {
+    app.listen(PORT, async () => {
+        // await fixMissingMemberDetails();
+
       console.log(`🚀 Server running on port ${PORT}`);
       // seedUsers();
     });
