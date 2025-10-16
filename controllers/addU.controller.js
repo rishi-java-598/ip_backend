@@ -58,3 +58,32 @@ export const addUser = async (req, res) => {
 };
 
 
+import { DeleteUserRequest } from '../models/request.model.js';
+
+// Delete User Controller
+export const deleteUser = async (req, res) => {
+  try {console.log("hitted");
+  
+    const userId = req.params.id; // Assuming user ID is passed in URL
+
+    // Check if user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Delete the user
+    await User.findByIdAndDelete(userId);
+
+    // Delete related delete user requests (if any)
+    await DeleteUserRequest.deleteMany({ targetUser: userId });
+
+    // Optionally, you can add anonymization here for attendance and pma data if needed.
+
+    return res.status(200).json({ message: 'User deleted successfully' });
+
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};

@@ -22,7 +22,7 @@ import { getAttendanceHistoryForMember } from "../controllers/getAttendanceHisto
 import { getMemberAttendance } from "../controllers/getMemberAttendance.controller.js";
 import { approveUserRegistration, rejectUserRegistration } from "../controllers/approveURR.controller.js";
 import { approveUserDeletionRequest, getAllDeletionRequests, rejectUserDeletionRequest } from "../controllers/delByAdmin.controller.js";
-import { addUser } from "../controllers/addU.controller.js";
+import { addUser, deleteUser } from "../controllers/addU.controller.js";
 import { updateUser } from "../controllers/updateUser.controller.js";
 
 // Router init
@@ -35,6 +35,12 @@ router.post("/auth/login", login);
 router.post("/auth/register", registerUser);
 router.post("/auth/add-user", verifyToken, authorizeRoles("admin", "manager"), addUser);
 router.put("/auth/update-user/:id", verifyToken, authorizeRoles("admin", "manager"), updateUser);
+
+// router.delete('/users/:id', deleteUser);
+
+// deleting user:
+router.delete('/delete/user/:id',verifyToken,authorizeRoles("admin"),deleteUser);
+
 /* =====================C
    PROFILE ROUTES
 ===================== */
