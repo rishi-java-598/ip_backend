@@ -7,7 +7,6 @@ import { pma } from "../models/pma.model.js";
  * Approve a user deletion request
  * This will delete the user after approval
  */
-
 //checked
 // need to be edited to remove all related data in the db
 
@@ -39,11 +38,10 @@ export const approveUserDeletionRequest = async (req, res) => {
   }
 };
 
-
-
 /**
  * Helper to delete user & clean up attendance
  */
+
 export const deleteUserById = async (userId) => {
   // Remove user from Users collection
   await User.findByIdAndDelete(userId);
