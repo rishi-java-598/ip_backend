@@ -1,5 +1,6 @@
 // controllers/memberController.js
 import { pma } from "../models/pma.model.js";
+import { User } from "../models/user.model.js";
 //checked
 /**
  * Get attendance records for a member
@@ -28,10 +29,14 @@ export const getMemberAttendance = async (req, res) => {
 
     // Fetch member attendance log
     const memberLog = await pma.findOne({ memberId });
+    
+    const {name} = await User.findById(memberId);
     if (!memberLog || !memberLog.records.length) {
-      return res.status(404).json({ message: "No attendance records found." });
+      return res.status(404).json({
+        username: name,
+        message: "No attendance records found."
+      });
     }
-
     // Filter by date
     let filteredRecords = memberLog.records;
     if (startDate) filteredRecords = filteredRecords.filter(r => new Date(r.date) >= new Date(startDate));
@@ -58,6 +63,7 @@ export const getMemberAttendance = async (req, res) => {
     const paginatedRecords = filteredRecords.slice(startIndex, endIndex);
 
     res.status(200).json({
+      username: name,
       page: parseInt(page),
       limit: parseInt(limit),
       totalRecords: filteredRecords.length,
@@ -67,6 +73,8 @@ export const getMemberAttendance = async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error while fetching member attendance." });
+    res.status(500).json({ 
+      
+      message: "Server error while fetching member attendance." });
   }
 };
