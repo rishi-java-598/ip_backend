@@ -19,7 +19,7 @@ import { getAttendanceSummaryByDate } from "../controllers/getAttendanceSummaryB
 import { getPreviousAttendance } from "../controllers/getPrevAttendance.controller.js";
 import { getProfileDetails } from "../controllers/getProfileDetail.controller.js";
 import { getAttendanceHistoryForMember } from "../controllers/getAttendanceHistoryForMember.controller.js";
-import { getMemberAttendance } from "../controllers/getMemberAttendance.controller.js";
+import { getMemberAttendance, getpMemberAttendance } from "../controllers/getMemberAttendance.controller.js";
 import { approveUserRegistration, rejectUserRegistration } from "../controllers/approveURR.controller.js";
 import { approveUserDeletionRequest, getAllDeletionRequests, rejectUserDeletionRequest } from "../controllers/delByAdmin.controller.js";
 import { addUser, deleteUser } from "../controllers/addU.controller.js";
@@ -193,6 +193,13 @@ router.get(
   verifyToken,
   // authorizeRoles("member"),
   getMemberAttendance
+);
+
+router.get(
+  "/attendance/memberp/",
+  verifyToken,
+  // authorizeRoles("member"),
+  getpMemberAttendance
 );
 
 // Get full attendance history for member

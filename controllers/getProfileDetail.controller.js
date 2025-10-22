@@ -38,6 +38,7 @@ export const getProfileDetails = async (req, res) => {
         email: user.email,
         phone: user.phone,
         role: user.role,
+        gender:user.Gender,
         membership: user.membership,
         uniqueIdCard: user.uniqueIdCard,
         status: user.status,

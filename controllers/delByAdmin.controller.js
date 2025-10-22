@@ -82,6 +82,7 @@ export const deleteUser = async (req, res) => {
 };
 
 
+
 export const getAllDeletionRequests = async (req, res) => {
   try {
     const requests = await DeleteUserRequest.find({ status: "pending" })
